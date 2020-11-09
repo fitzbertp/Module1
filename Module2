@@ -1,0 +1,114 @@
+//This Program uses strut to finds the number of days passed between till date and since date.
+
+#include <iostream>
+using namespace std;
+
+struct Date
+{
+	int year;
+	int month;
+	int day;
+};
+
+
+//The code you've inserted already
+bool isLeap(int year)
+{
+	// if the year number isn't divisible by 4, it is a common year;
+	if (year % 4 != 0)
+		return false;
+
+	// otherwise, if the year number isn't divisible by 100, it is a leap year;
+	else if (year % 100 != 0)
+		return true;
+
+	// otherwise, if the year number isn't divisible by 400, it is a common year;
+	else if (year % 400 != 0)
+		return false;
+	// otherwise, it is a leap year(February has 29 days);
+	else true;
+
+}
+
+// The code you've inserted already
+int monthLength(int year, int month)
+{
+	//leap year condition, if month is 2
+	if (month == 2)
+	{
+		if (isLeap(year))
+			return 29;
+		else
+			return 28;
+	}
+
+	//months which has 31 days
+	else if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8
+		|| month == 10 || month == 12)
+		return 31;
+	else
+		return 30;
+
+}
+
+// The code you've inserted already
+int dayOfYear(Date date)
+{
+	// Insert your code here
+	//int x = 0;
+	int days = 0;
+	for (int m = 1; m < date.month; m++)
+	{
+		days += monthLength(date.year, m);
+		days = days + date.day;
+    }
+	return days;
+
+}
+
+int daysBetween(Date d1, Date d2)
+{
+	//Insert you code here
+
+	// COUNT TOTAL NUMBER OF DAYS
+	// BEFORE FIRST DATE 'since'
+	
+	int monthLength(int, int);
+
+	// initialize count using years and day
+	long int st1 = d1.year * 365 + d1.day;
+	// Add days for months in given date
+	for (int i = 0; i < d1.month - 1; i++)
+	{
+		st1 += monthLength(d1.year, d1.month);
+		// Since every leap year is of 366 days,
+		// Add a day for every leap year
+		st1 += isLeap(d1.year);
+	}
+
+	// SIMILARLY, COUNT TOTAL NUMBER OF
+	// DAYS BEFORE 'till'
+
+	long int st2 = d2.year * 365 + d2.day;
+	for (int i = 0; i < d2.month - 1; i++)
+	{
+		st2 += monthLength(d2.year, d2.month);
+		st2 += isLeap(d2.year);
+	}
+
+	// return difference between two counts
+	return st2 - st1;
+
+}
+
+int main(void)
+{
+	Date since, till;
+	cout << "Enter first date (y m d): ";
+	cin >> since.year >> since.month >> since.day;
+	cout << "Enter second date (y m d): ";
+	cin >> till.year >> till.month >> till.day;
+	cout << daysBetween(since, till) << endl;
+
+	return 0;
+}
